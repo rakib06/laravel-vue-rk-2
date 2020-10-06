@@ -3,7 +3,11 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Prodcut Categories </div>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"> Product Categories </h5>
+                        
+                        <router-link :to="{name: 'create-category'}" class="btn btn-primary">Create Category</router-link>
+                    </div>
 
                     <div class="card-body">
                         <table class="table">
