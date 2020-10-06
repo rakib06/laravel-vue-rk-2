@@ -16,7 +16,9 @@
                                 <form @submit.prevent="createCategory">
                                     <div class="form-group">
                                         <label for=""> Category Name </label>
-                                        <input type="text" v-model="categoryName" class="form-control" placeholder="category name">
+                                        <input type="text" v-model="categoryForm.name" class="form-control" placeholder="category name" :class="{ 'is-invalid': categoryForm.errors.has('name') }">
+
+      <has-error :form="categoryForm" field="name"></has-error>
                                     </div>
                                     <div class="form-group mr-auto">
                                         <button type="submit" class="btn btn-success "> Save </button>
@@ -35,18 +37,35 @@
 </template>
 
 <script>
+
+import { Form } from 'vform'
 export default {
     data(){
         return {
-            categoryName:'',
+            // Create a new form instance
+            categoryForm: new Form({
+                name: '',
+                
+            })
+           
         }
     },
     methods: {
         createCategory(){
+            /*
             console.log(this.categoryName);
             axios.post('/api/category', {name: this.categoryName}).then(response => {
             console.log(response);
             })
+            */
+
+              // Submit the form via a POST request
+      this.categoryForm.post('/api/category')
+        .then(({ data }) => { 
+            this.categoryForm.name="";
+            console.log(data);
+         })
+
         }
     }
 
