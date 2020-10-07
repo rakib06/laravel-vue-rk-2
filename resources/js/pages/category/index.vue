@@ -27,8 +27,8 @@
                                     <td>  {{ category.name }} </td>
                                     <td>{{ category.slug }} </td>
                                     <td style="width: 170px" >
-                                        <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                        <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                                        <router-link :to="{name: 'edit-category', params:{id: category.id }}" class="btn btn-primary btn-sm">Edit</router-link>
+                                        <a @click.prevent="deleteCategory(category)" class="btn btn-danger btn-sm">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -42,18 +42,37 @@
 
 <script>
     export default {
+        // Part 1
         data(){
             return{
                 categories: []
             }
         },
+        // Part 2
         methods: {
             loadCategories(){
                 axios.get('api/category').then(response => {
                     this.categories = response.data;
                 })
+            },
+
+            deleteCategory(category){
+                
+                axios.delete(`/api/category/${category.id}`).then(()=>{
+                    this.$toast.success({
+                    title:'Success!',
+                    message:'Category deleted! '
+                }
+                    );// then
+
+                });
+                
+                let index = this.categories.indexOf(category);
+                console.log(index);
+                this.categories.splice(index, 1);
             }
         },
+        // Part 3
         mounted() {
             this.loadCategories();
         }
