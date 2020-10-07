@@ -12,21 +12,21 @@
                     <div class="card-body">
                         <table class="table">
                             <thead>
-                                <tr>
-                                    <th> Id </th>
+                                <tr >
+                                    <th style="width: 100px"> Id </th>
                                     <th> Name </th>
                                     <th> Slug </th>
-                                    <th> Action </th>
+                                    <th style="width: 170px" > Action </th>
                                 </tr>
                             
                             </thead>
 
                             <tbody>
-                                <tr>
-                                    <td>1 </td>
-                                    <td>Fashion  </td>
-                                    <td>fashion </td>
-                                    <td>
+                                <tr v-for="category in categories" :key="category.id" >
+                                    <td style="width: 100px" >{{ category.id }}</td>
+                                    <td>  {{ category.name }} </td>
+                                    <td>{{ category.slug }} </td>
+                                    <td style="width: 170px" >
                                         <a href="#" class="btn btn-primary btn-sm">Edit</a>
                                         <a href="#" class="btn btn-danger btn-sm">Delete</a>
                                     </td>
@@ -42,8 +42,20 @@
 
 <script>
     export default {
+        data(){
+            return{
+                categories: []
+            }
+        },
+        methods: {
+            loadCategories(){
+                axios.get('api/category').then(response => {
+                    this.categories = response.data;
+                })
+            }
+        },
         mounted() {
-            console.log('Component mounted.')
+            this.loadCategories();
         }
     }
 </script>

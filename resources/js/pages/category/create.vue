@@ -52,19 +52,16 @@ export default {
     },
     methods: {
         createCategory(){
-            /*
-            console.log(this.categoryName);
-            axios.post('/api/category', {name: this.categoryName}).then(response => {
-            console.log(response);
-            })
-            */
+            this.categoryForm.post('/api/category')
+            .then(({ data }) => { 
+                this.categoryForm.name = '';
+                this.$toast.success({
+                    title:'Success!',
+                    message:'Category Created!'
+                })
+                console.log(data);
 
-              // Submit the form via a POST request
-      this.categoryForm.post('/api/category')
-        .then(({ data }) => { 
-            this.categoryForm.name="";
-            console.log(data);
-         })
+            })
 
         }
     }
